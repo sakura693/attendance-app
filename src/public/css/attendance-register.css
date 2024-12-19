@@ -1,0 +1,41 @@
+.register__content{
+    margin: 0 auto;
+}
+
+.register__content--inner{
+    display: flex;
+    /* 要素を縦方向に並べる */
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.work__status{
+    background: rgb(205, 198, 193);
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 20px;
+}
+
+.date{
+    font-size: 50px;
+    margin-top: 20px;
+}
+
+.time{
+    font-size: 70px;
+    font-weight: bold;
+    margin: 5px 0 40px 0;
+}
+
+.register__btn{
+    background: #000;
+    color: white;
+    width: 100px;
+    height: 40px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}

@@ -1,0 +1,75 @@
+/*box-sizing:要素の幅や高さの計算にパディングやボーダーを含める
+margin/padding:デフォで空白できてしまうのでリセットする*/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.header{
+    background: #000;
+    height: 50px;
+}
+
+.header__logo{
+    margin-left: 20px;
+}
+
+
+body{
+    width: 100vw;
+    background: rgb(237, 237, 237);
+}
+
+.btn{
+    background: #000;
+    color: white;
+    display: block;
+    width: 100%;
+    height: 40px;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.small-btn {
+    background: #000;
+    color: white;
+    width: 90px;
+    height: 35px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.form__error{
+    color:red;
+}
+
+/*コンテントの基本のデザイン*/
+.content {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+.content__inner {
+    width: 60vw;
+    margin-top: 40px;
+}
+.content__title {
+    font-size: 23px;
+    border-left: 6px solid black;
+    border-radius: 3px;
+    padding-left: 15px;
+}
+
+/*テーブルの線*/
+.table__row {
+    border-bottom: 1.5px solid rgb(211, 196, 196);
+}
+
+@media (min-width: 768px) and (max-width: 850px){
+
+}

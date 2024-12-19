@@ -1,0 +1,58 @@
+/*カレンダー部分*/
+.calendar{
+    background: white;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    margin: 30px 0;
+    padding: 0 20px;
+}
+
+.text__container{
+    border: 1px solid  blue;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.arrow-left__icon {
+    margin-right: 3px;
+}
+
+.arrow-right__icon{
+    margin-left: 3px;
+}
+
+.calendar__text{
+    font-size: 13px;
+    color: rgb(168, 155, 155);
+    font-weight: bold;
+    border: 1px solid red;
+}
+
+/*テーブル*/
+.table {
+    background: white;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 30px;
+    border-collapse: collapse;
+}
+
+.table__label, 
+.table__data {
+    font-size: 15px;
+    color: rgb(147, 135, 135);
+    padding: 10px 80px 8px 0;
+    text-align: center;
+}
+
+.table__label:first-of-type,
+.table__data:first-of-type {
+    padding-right: 120px;
+    padding-left: 45px;
+}
+
+
+

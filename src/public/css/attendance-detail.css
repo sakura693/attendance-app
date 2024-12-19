@@ -1,0 +1,67 @@
+/*テーブル*/
+.table {
+    background: white;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 50px;
+    border-collapse: collapse;
+}
+
+.table tr {
+    display: grid;
+    /* 行をグリッドとして扱う */
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+}
+
+.table__label{
+    font-size: 15px;
+    color: rgb(147, 135, 135);
+    padding: 23px 30px 20px 50px;
+    text-align: left;
+}
+
+.table__data {
+    font-size: 15px;
+    color: black;
+    padding: 23px 30px 20px 50px;
+}
+
+.table__input{
+    width: 90px;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 15px;
+    border: 1px solid rgb(199, 193, 193);
+    border-radius: 3px;
+    /*margin-right: 70px;*/
+}
+
+.input__year{
+    margin-right: 86px;
+}
+
+.time_mark{
+    margin: 0 35px;
+    font-size: 15px;
+}
+
+.remarks-section{
+    /* サイズ変更を無効化 */
+    resize: none;
+    margin: -10px 0;
+    font-size: 13px;
+    padding: 5px;
+    border: 1px solid rgb(199, 193, 193);
+    border-radius: 3px;
+}
+
+.btn__inner{
+    text-align: right;
+}
+
+.correction__btn{
+    margin: 70px 0 30px;
+}
+
+

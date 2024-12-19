@@ -1,0 +1,44 @@
+.status__container{
+    border-bottom: 1.5px solid black;
+    padding-bottom: 8px;
+    margin-top: 50px;
+}
+
+.status__text{
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+
+.pending-approval{
+    margin: 0 90px 0 50px;
+}
+
+/*テーブル*/
+.table {
+    background: white;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 40px;
+    border-collapse: collapse;
+}
+
+
+.table__label,
+.table__data {
+    font-size: 15px;
+    color: rgb(147, 135, 135);
+    padding: 10px 0px 8px 30px;
+    text-align: center;
+}
+
+.table__label:first-of-type,
+.table__data:first-of-type {
+    padding-left: 40px;
+}
+
+.table__label:last-of-type,
+.table__data:last-of-type {
+    padding-right: 40px;
+}
