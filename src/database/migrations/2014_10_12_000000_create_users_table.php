@@ -19,6 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            /*カラムにあらかじめ定義された値だけ保存できる*/
+            $table->enum('role', ['admin', 'staff'])->default('staff');
+            /*ログイン時にユーザーを記憶する機能で、次回ログイン時に認証をスキップ*/
             $table->rememberToken();
             $table->timestamps();
         });

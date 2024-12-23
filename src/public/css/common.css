@@ -9,10 +9,37 @@ margin/padding:デフォで空白できてしまうのでリセットする*/
 .header{
     background: #000;
     height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .header__logo{
     margin-left: 20px;
+}
+
+/*headerのリンク部分*/
+ul {
+    list-style: none;
+}
+
+.header__link--inner{
+    display: flex;
+    justify-content: right;
+}
+
+.header__link{
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 40px;
+}
+
+.logout{
+    border: none;
+    background: none;
 }
 
 

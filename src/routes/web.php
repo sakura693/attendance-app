@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CorrectionController;
+use App\Http\Controllers\Auth\RegisterController; //追加
+use App\Http\Controllers\Auth\LoginController; //追加
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController; //追加
 
 
 /*
@@ -17,15 +20,28 @@ use App\Http\Controllers\CorrectionController;
 |
 */
 
-//仮
-Route::get('/login', [AuthController::class, 'login']);
-Route::get('/register', [AuthController::class, 'register']);
-Route::get('/admin/login', [AuthController::class, 'adminLogin']);
+Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::get('/attendance', [AttendanceController::class, 'attendanceRegister']);
+
+//管理者ログイン画面取得
+Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->middleware(['guest'])->name('admin.login');
+
+//管理者ログイン情報保存
+Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])
+->middleware(['guest'])->name('admin.login');
+
 Route::get('/admin/attendance/list', [AttendanceController::class, 'getAdminAttendanceList']);
+
+
+
+//仮
 Route::get('/attendance/list', [AttendanceController::class, 'getAttendanceList']);
 Route::get('/admin/staff/list', [AttendanceController::class, 'getStaffList']);
 Route::get('/admin/attendance/staff/{id}', [AttendanceController::class, 'getStaffAttendanceList']);
 Route::get('/attendance/{id}', [AttendanceController::class, 'getAttendanceDetail']);
 Route::get('/stamp_correction_request/list', [CorrectionController::class, 'correctionRequest']);
-Route::get('/attendance', [AttendanceController::class, 'attendanceRegister']);
+
 

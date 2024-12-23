@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
+    //仮
+    public function attendanceRegister(){
+        return view('attendance-register');
+    }
+
     public function getAdminAttendanceList(){
         return view('admin-attendance-list');
     }
@@ -26,10 +31,7 @@ class AttendanceController extends Controller
         return view('attendance-detail');
     }
 
-    public function attendanceRegister(){
-        return view('attendance-register');
-    }
-
+    
 
 
     
