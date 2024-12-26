@@ -20,5 +20,19 @@ class BreakRecordsTableSeeder extends Seeder
             'break_end' => '13:00:00',
         ];
         DB::table('break_records')->insert($param);
+
+         $param = [
+            'attendance_id' => 2,
+            'break_start' => '12:30:00',
+            'break_end' => '13:00:00',
+        ];
+        DB::table('break_records')->insert($param);
+
+         $param = [
+            'attendance_id' => 3,
+            'break_start' => '12:10:00',
+            'break_end' => '13:00:00',
+        ];
+        DB::table('break_records')->insert($param);
     }
 }

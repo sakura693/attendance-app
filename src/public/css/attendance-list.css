@@ -9,11 +9,20 @@
     padding: 0 20px;
 }
 
-.text__container{
-    border: 1px solid  blue;
-    display: flex;
-    justify-content: space-between;
+.calendar__conteinar{
     width: 100%;
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+}
+
+.calendar__inner{
+    cursor: pointer;
+}
+
+.date__container{
+    display: flex;
+    align-items: center;
 }
 
 .arrow-left__icon {
@@ -25,10 +34,18 @@
 }
 
 .calendar__text{
-    font-size: 13px;
+    font-size: 15px;
     color: rgb(168, 155, 155);
     font-weight: bold;
-    border: 1px solid red;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.date__text{
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 /*テーブル*/
@@ -38,6 +55,7 @@
     border-radius: 10px;
     margin-top: 30px;
     border-collapse: collapse;
+    table-layout: fixed; /*列幅の固定*/
 }
 
 .table__label, 
@@ -46,12 +64,19 @@
     color: rgb(147, 135, 135);
     padding: 10px 80px 8px 0;
     text-align: center;
+    white-space: nowrap; /*テキストを折り返さない*/
 }
 
 .table__label:first-of-type,
 .table__data:first-of-type {
+    width: 25%;
     padding-right: 120px;
-    padding-left: 45px;
+    padding-left: 40px;
+}
+
+.attendance_detail{
+    text-decoration: none;
+    color: black;
 }
 
 

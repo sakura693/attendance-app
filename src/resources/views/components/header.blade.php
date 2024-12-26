@@ -23,8 +23,8 @@
                 @else
                     @if(Request::is(''))<!--勤怠登録画面-勤怠後の場合-->
                     <div class="header__link--inner">
-                        <li><a class="header__link" href="">今日の出勤一覧</a></li>
-                        <li><a class="header__link" href="">申請一覧</a></li>
+                        <li><a class="header__link" href="/attendance/list">今日の出勤一覧</a></li>
+                        <li><a class="header__link" href="/stamp_correction_request/list">申請一覧</a></li>
                         <li>
                             <form action="/logout" method="post">
                                 @csrf
@@ -34,9 +34,9 @@
                     </div>
                     @else <!--その他の場合-->
                     <div class="header__link--inner">
-                        <li><a class="header__link" href="">勤怠</a></li>
-                        <li><a class="header__link" href="">勤怠一覧</a></li>
-                        <li><a class="header__link" href="">申請</a></li>
+                        <li><a class="header__link" href="/attendance">勤怠</a></li>
+                        <li><a class="header__link" href="/attendance/list">勤怠一覧</a></li>
+                        <li><a class="header__link" href="/stamp_correction_request/list">申請</a></li>
                         <li>
                             <form action="/logout" method="post">
                                 @csrf
