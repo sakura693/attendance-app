@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; //追加
 use Carbon\Carbon; //追加
+use App\Models\Attendance;
+
+
 
 class AttendanceController extends Controller
 {
@@ -78,6 +81,15 @@ class AttendanceController extends Controller
     }
 
 
+    public function getAttendanceDetail($attendance_id){
+        $attendance = Attendance::with(['user', 'breakRecords', 'attendanceRequest'])->findOrFail($attendance_id);
+
+        //日付を年と月日に分ける
+        $year = Carbon::parse($attendance->date)->format('Y年');
+        $monthDay = Carbon::parse($attendance->date)->format('m月d日');
+
+        return view('attendance-detail', compact('attendance', 'year', 'monthDay'));
+    }
 
     
     //仮
@@ -97,9 +109,7 @@ class AttendanceController extends Controller
         return view('staff-attendance-list');
     }
 
-    public function getAttendanceDetail(){
-        return view('attendance-detail');
-    }
+    
 
     
 

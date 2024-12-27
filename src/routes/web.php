@@ -35,13 +35,21 @@ Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])
 
 Route::get('/admin/attendance/list', [AttendanceController::class, 'getAdminAttendanceList']);
 
+//勤怠一覧画面を取得
+Route::get('/attendance/list', [AttendanceController::class, 'getAttendanceList']);
+
+//勤怠詳細画面を取得
+Route::get('/attendance/{attendance_id}', [AttendanceController::class, 'getAttendanceDetail']);
+
+//申請一覧画面を取得
+Route::get('/stamp_correction_request/list', [CorrectionController::class, 'correctionRequest']);
 
 
 //仮
-Route::get('/attendance/list', [AttendanceController::class, 'getAttendanceList']);
+
 Route::get('/admin/staff/list', [AttendanceController::class, 'getStaffList']);
 Route::get('/admin/attendance/staff/{id}', [AttendanceController::class, 'getStaffAttendanceList']);
-Route::get('/attendance/{id}', [AttendanceController::class, 'getAttendanceDetail']);
-Route::get('/stamp_correction_request/list', [CorrectionController::class, 'correctionRequest']);
+
+
 
 

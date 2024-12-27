@@ -15,7 +15,7 @@ class BreakRecord extends Model
         'break_end'
     ];
 
-    public function attendances(){
+    public function attendance(){
         return $this->beongsTo(Attendance::class);
     }
 }

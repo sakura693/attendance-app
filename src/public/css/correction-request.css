@@ -42,3 +42,8 @@
 .table__data:last-of-type {
     padding-right: 40px;
 }
+
+.attendance_detail {
+    text-decoration: none;
+    color: black;
+}

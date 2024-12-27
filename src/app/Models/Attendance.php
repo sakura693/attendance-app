@@ -16,7 +16,7 @@ class Attendance extends Model
         'clock_out_time'
     ];
 
-    public function users(){
+    public function user(){
         return $this->belongsTo(User::class);
     }
 
@@ -24,7 +24,7 @@ class Attendance extends Model
         return $this->hasMany(BreakRecord::class);
     }
 
-    public function attendanceRequests(){
-        return $this->hasMany(AttendanceRequest::class);
+    public function attendanceRequest(){
+        return $this->hasOne(AttendanceRequest::class);
     }
 }

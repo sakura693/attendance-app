@@ -56,7 +56,7 @@
                     <td class="table__data">{{ $attendance->break_hours }}</td>
                     <td class="table__data">{{ $attendance->total_hours }}</td>
                     <td class="table__data">
-                        <a class="attendance_detail" href="">詳細</a>
+                        <a class="attendance_detail" href="/attendance/{{ $attendance->id }}">詳細</a>
                     </td>
                 </tr>
             @endforeach

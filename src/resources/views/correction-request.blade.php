@@ -29,14 +29,18 @@
             </tr>
 
             <!--実際の値-->
-            <tr class="table__row">
-                <td class="table__data">あ</td>
-                <td class="table__data">い</td>
-                <td class="table__data">う</td>
-                <td class="table__data">あ</td>
-                <td class="table__data">い</td>
-                <td class="table__data">う</td>
-            </tr>
+            @foreach($corrections as $correction)
+                <tr class="table__row">
+                    <td class="table__data">{{ $correction->status->status }}</td>
+                    <td class="table__data">{{ $correction->attendance->user->name}}</td>
+                    <td class="table__data">{{ \Carbon\Carbon::parse($correction->attendance->date)->format('Y/m/d') }}</td>
+                    <td class="table__data">{{ $correction->reason }}</td>
+                    <td class="table__data">{{ \Carbon\Carbon::parse($correction->created_at)->format('Y/m/d') }}</td>
+                    <td class="table__data">
+                        <a class="attendance_detail" href="/attendance/{{ $correction->attendance->id }}">詳細</a>
+                    </td>
+                </tr>
+            @endforeach
         </table>
     </div>
 </div>

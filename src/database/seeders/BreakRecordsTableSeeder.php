@@ -22,7 +22,7 @@ class BreakRecordsTableSeeder extends Seeder
         DB::table('break_records')->insert($param);
 
          $param = [
-            'attendance_id' => 2,
+            'attendance_id' => 1,
             'break_start' => '12:30:00',
             'break_end' => '13:00:00',
         ];
