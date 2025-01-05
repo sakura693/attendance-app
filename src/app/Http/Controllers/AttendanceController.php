@@ -91,11 +91,8 @@ class AttendanceController extends Controller
         return view('attendance-detail', compact('attendance', 'year', 'monthDay'));
     }
 
-    
+
     //仮
-    public function attendanceRegister(){
-        return view('attendance-register');
-    }
 
     public function getAdminAttendanceList(){
         return view('admin-attendance-list');

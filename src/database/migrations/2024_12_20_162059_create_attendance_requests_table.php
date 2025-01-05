@@ -17,7 +17,11 @@ class CreateAttendanceRequestsTable extends Migration
             $table->id();
             $table->foreignid('attendance_id')->constrained()->cascadeOnDelete();
             $table->foreignid('status_id')->constrained()->cascadeOnDelete();
-            $table->string('reason');
+            $table->date('new_date')->nullable();
+            $table->time('new_clock_in_time')->nullable();
+            $table->time('new_clock_out_time')->nullable();
+            $table->string('reason')->nullable();
+            $table->string('pending_reason')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });

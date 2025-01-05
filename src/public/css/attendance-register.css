@@ -32,10 +32,28 @@
 .register__btn{
     background: #000;
     color: white;
-    width: 100px;
-    height: 40px;
-    font-size: 15px;
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 15px;
+    border: none;
     cursor: pointer;
+}
+
+.break__btn{
+    background: white;
+    color: black;
+    border: none;
+}
+
+.form__container{
+    display: flex;
+    gap: 50px;
+}
+
+.clock-out__message{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
 }
