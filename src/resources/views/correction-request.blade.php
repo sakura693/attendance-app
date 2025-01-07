@@ -14,8 +14,8 @@
         <h1 class="content__title">申請一覧</h1>
 
         <div class="status__container">
-            <a class="status__text pending-approval" href="">承認待ち</a>
-            <a class="status__text approved" href="">承認済み</a>
+            <a class="status__text pending-approval" href="/stamp_correction_request/list/?tab=pending">承認待ち</a>
+            <a class="status__text approved" href="/stamp_correction_request/list/?tab=approved">承認済み</a>
         </div>
 
         <table class="table">
@@ -34,7 +34,7 @@
                     <td class="table__data">{{ $correction->status->status }}</td>
                     <td class="table__data">{{ $correction->attendance->user->name}}</td>
                     <td class="table__data">{{ \Carbon\Carbon::parse($correction->attendance->date)->format('Y/m/d') }}</td>
-                    <td class="table__data">{{ $correction->reason }}</td>
+                    <td class="table__data">{{ $correction->display_reason }}</td>
                     <td class="table__data">{{ \Carbon\Carbon::parse($correction->created_at)->format('Y/m/d') }}</td>
                     <td class="table__data">
                         <a class="attendance_detail" href="/attendance/{{ $correction->attendance->id }}">詳細</a>

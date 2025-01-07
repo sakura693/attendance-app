@@ -17,6 +17,13 @@ class AttendancesRequestsTableSeeder extends Seeder
         $param = [
             'attendance_id' => 1,
             'status_id' => '1',
+            'pending_reason' => '電車遅延のため',
+            'approved_at' => null
+        ];
+        DB::table('attendance_requests')->insert($param);
+        $param = [
+            'attendance_id' => 2,
+            'status_id' => '2',
             'reason' => '電車遅延のため',
             'approved_at' => null
         ];

@@ -64,4 +64,22 @@
     margin: 70px 0 30px;
 }
 
+.form__error{
+    margin-left: 308px;
+}
 
+.text__data{
+    display: flex;
+}
+
+.text__year{
+    margin-right: 70px;
+}
+
+.text__remark{
+    color: rgb(254, 117, 140);
+    font-weight: bold;
+    display: flex;
+    justify-content: right;
+    margin-top: 10px;
+}

@@ -32,7 +32,7 @@ Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->m
 
 //管理者ログイン情報保存
 Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])
-->middleware(['guest'])->name('admin.login');
+->middleware(['guest'])->name('admin.login.post');
 
 Route::get('/admin/attendance/list', [AttendanceController::class, 'getAdminAttendanceList']);
 
