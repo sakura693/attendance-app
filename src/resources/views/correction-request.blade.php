@@ -14,8 +14,12 @@
         <h1 class="content__title">申請一覧</h1>
 
         <div class="status__container">
-            <a class="status__text pending-approval" href="/stamp_correction_request/list/?tab=pending">承認待ち</a>
-            <a class="status__text approved" href="/stamp_correction_request/list/?tab=approved">承認済み</a>
+            @php
+                $currentTab = request('tab');
+            @endphp
+
+            <a class="status__text pending-approval {{ $currentTab === 'pending' ? 'active' : '' }}" href="/stamp_correction_request/list/?tab=pending">承認待ち</a>
+            <a class="status__text approved {{ $currentTab === 'approved' ? 'active' : ''}}" href="/stamp_correction_request/list/?tab=approved">承認済み</a>
         </div>
 
         <table class="table">

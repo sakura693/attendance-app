@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\RegisterController; //追加
 use App\Http\Controllers\Auth\LoginController; //追加
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController; //追加
 use App\Http\Controllers\AttendanceRegisterController; //追加
+use App\Http\Controllers\AdminController; //追加
+
 
 
 /*
@@ -34,8 +36,6 @@ Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->m
 Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])
 ->middleware(['guest'])->name('admin.login.post');
 
-Route::get('/admin/attendance/list', [AttendanceController::class, 'getAdminAttendanceList']);
-
 //勤怠一覧画面を取得
 Route::get('/attendance/list', [AttendanceController::class, 'getAttendanceList']);
 
@@ -59,9 +59,13 @@ Route::post('/attendance/break/end', [AttendanceRegisterController::class, 'brea
 Route::post('/attendance/list', [CorrectionController::class, 'request']);
 
 
-//仮
-Route::get('/admin/staff/list', [AttendanceController::class, 'getStaffList']);
-Route::get('/admin/attendance/staff/{id}', [AttendanceController::class, 'getStaffAttendanceList']);
+//当日の勤怠情報を取得
+Route::get('/admin/attendance/list', [AdminController::class, 'getAdminAttendanceList']);
+
+//スタッフ一覧画面を取得
+Route::get('/admin/staff/list', [AdminController::class, 'getStaffList']);
+//特定のスタッフの詳細画面を取得
+Route::get('/admin/attendance/staff/{id}', [AdminController::class, 'getStaffAttendanceList']);
 
 
 

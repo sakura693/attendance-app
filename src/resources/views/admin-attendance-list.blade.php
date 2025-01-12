@@ -13,15 +13,29 @@
 @include('components.header')
 <div class="content">
     <div class="content__inner">
-        <h1 class="content__title">例: 2023年6月1日の勤怠</h1>
+        <h1 class="content__title">{{ \Carbon\Carbon::createFromFormat('Y/m/d', $currentDay)->format('Y年n月j日') }}の勤怠 </h1>
 
         <!--カレンダー部分-->
         <div class="calendar">
-            <!--矢印アイコン-->
-            <i class="fa-solid fa-arrow-left arrow-left__icon" style="color: #a8a7a3;"></i>
-            <div class="text__container">
-                <p class="calendar__text">前日</p>
-            </div>
+            <form class="calendar__conteinar" class="get__month" method="get" action="/admin/attendance/list">
+                @csrf
+                <div class="calendar__inner">
+                    <!--矢印アイコン-->
+                    <i class="fa-solid fa-arrow-left arrow-left__icon" style="color: #a8a7a3;"></i>
+                    <button class="calendar__text" type='submit' name="action" value="prev_day">前日</button>
+                </div>
+                
+                <!--日付部分-->
+                <div class="date__container">
+                    <i class="fa-regular fa-calendar-days fa-lg" style="color: #a8a7a3;"></i>
+                    <div class="date__text">{{ $currentDay }}</div>
+                </div>
+
+                <div class="calendar__inner">
+                    <button class="calendar__text" type='submit' name="action" value="next_day">翌日</button>
+                    <i class="fa-solid fa-arrow-right arrow-right__icon" style="color: #a8a7a3;"></i>
+                </div>
+            </form>
         </div>
 
         <table class="table">
@@ -35,14 +49,18 @@
             </tr>
 
             <!--実際の値-->
-            <tr class="table__row">
-                <td class="table__data">あ</td>
-                <td class="table__data">い</td>
-                <td class="table__data">う</td>
-                <td class="table__data">え</td>
-                <td class="table__data">お</td>
-                <td class="table__data">か</td>
-            </tr>
-        </table>
+            @foreach($attendances as $attendance)
+                <tr class="table__row">
+                    <td class="table__data">{{ $attendance->user->name }}</td>
+                    <td class="table__data">{{ $attendance->formatted_clock_in_time}}</td>
+                    <td class="table__data">{{ $attendance->formatted_clock_out_time}}</td>
+                    <td class="table__data">{{ $attendance->break_hours}}</td>
+                    <td class="table__data">{{ $attendance->total_hours}}</td>
+                    <td class="table__data">
+                        <a class="attendance_detail" href="">詳細</a>
+                    </td>
+                </tr>
+            @endforeach
+        </table> 
     </div>
 </div>

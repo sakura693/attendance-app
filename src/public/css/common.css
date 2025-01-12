@@ -97,6 +97,11 @@ body{
     border-bottom: 1.5px solid rgb(211, 196, 196);
 }
 
+.attendance_detail {
+    text-decoration: none;
+    color: black;
+}
+
 @media (min-width: 768px) and (max-width: 850px){
 
 }

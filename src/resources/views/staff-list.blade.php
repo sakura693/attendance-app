@@ -21,11 +21,15 @@
             </tr>
 
             <!--実際の値-->
-            <tr class="table__row">
-                <td class="table__data">あ</td>
-                <td class="table__data">い</td>
-                <td class="table__data">う</td>
-            </tr>
+            @foreach($users as $user)
+                <tr class="table__row">
+                    <td class="table__data">{{ $user->name }}</td>
+                    <td class="table__data">{{ $user->email }}</td>
+                    <td class="table__data">
+                        <a class="attendance_approval" href="/admin/attendance/staff/{{$user->id}}">詳細</a>
+                    </td>
+                </tr>
+            @endforeach
         </table>
     </div>
 </div>

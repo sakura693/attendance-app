@@ -3,6 +3,8 @@
 <!--css読み込み-->
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/attendance-list.css') }}">
+<!--font awesomをインポート-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @endsection
 
 <!--本体-->
@@ -11,22 +13,30 @@
 @include('components.header')
 <div class="content">
     <div class="content__inner">
-        <h1 class="content__title">例:山田花子さんの勤怠</h1>
+        <h1 class="content__title">{{ $user->name }}さんの勤怠</h1>
 
         <!--カレンダー部分-->
         <div class="calendar">
-            <!--矢印アイコン-->
-            <i class="fa-solid fa-arrow-left arrow-left__icon" style="color: #a8a7a3;"></i>
-            <div class="text__container">
-                <p class="calendar__text">前月</p>
+            <form class="calendar__conteinar" class="get__month" method="get" action="">
+                <div class="calendar__inner">
+                    <!--矢印アイコン-->
+                    <i class="fa-solid fa-arrow-left arrow-left__icon" style="color: #a8a7a3;"></i>
+                    <button class="calendar__text" type='submit' name="action" value="prev">前月</button>
+                </div>
                 
                 <!--日付部分-->
-                <div>（仮）日付</div>
+                <div class="date__container">
+                    <i class="fa-regular fa-calendar-days fa-lg" style="color: #a8a7a3;"></i>
+                    <div class="date__text">{{ $currentMonth }}</div>
+                </div>
 
-                <p class="calendar__text">翌月</p>
-            </div>
-            <i class="fa-solid fa-arrow-right arrow-right__icon" style="color: #a8a7a3;"></i>
+                <div class="calendar__inner">
+                    <button class="calendar__text" type='submit' name="action" value="next">翌月</button>
+                    <i class="fa-solid fa-arrow-right arrow-right__icon" style="color: #a8a7a3;"></i>
+                </div>
+            </form>
         </div>
+
 
         <table class="table">
             <tr class="table__row">
@@ -39,14 +49,18 @@
             </tr>
 
             <!--実際の値-->
-            <tr class="table__row">
-                <td class="table__data">あ</td>
-                <td class="table__data">い</td>
-                <td class="table__data">う</td>
-                <td class="table__data">え</td>
-                <td class="table__data">お</td>
-                <td class="table__data">か</td>
-            </tr>
+            @foreach($attendances as $attendance)
+                <tr class="table__row">
+                    <td class="table__data">{{ $attendance->formatted_date }}</td>
+                    <td class="table__data">{{ $attendance->formatted_clock_in_time }}</td>
+                    <td class="table__data">{{ $attendance->formatted_clock_out_time }}</td>
+                    <td class="table__data">{{ $attendance->break_hours}}</td>
+                    <td class="table__data">{{ $attendance->total_hours}}</td>
+                    <td class="table__data">
+                        <a class="attendance_detail" href="/attendance/{{ $attendance->id }}">詳細</a>
+                    </td>
+                </tr>
+            @endforeach
         </table>
     </div>
 </div>
