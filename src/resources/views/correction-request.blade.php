@@ -41,7 +41,11 @@
                     <td class="table__data">{{ $correction->display_reason }}</td>
                     <td class="table__data">{{ \Carbon\Carbon::parse($correction->created_at)->format('Y/m/d') }}</td>
                     <td class="table__data">
-                        <a class="attendance_detail" href="/attendance/{{ $correction->attendance->id }}">詳細</a>
+                        @if (Auth::user()->role === 'admin')
+                            <a class="attendance_detail" href="/stamp_correction_request/approve/{{ $correction->attendance->id }}">詳細</a>
+                        @else
+                            <a class="attendance_detail" href="/attendance/{{ $correction->attendance->id }}">詳細</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

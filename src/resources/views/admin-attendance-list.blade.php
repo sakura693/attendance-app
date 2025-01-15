@@ -53,11 +53,15 @@
                 <tr class="table__row">
                     <td class="table__data">{{ $attendance->user->name }}</td>
                     <td class="table__data">{{ $attendance->formatted_clock_in_time}}</td>
-                    <td class="table__data">{{ $attendance->formatted_clock_out_time}}</td>
+                    <td class="table__data">
+                        @if ($attendance->clock_out_time)
+                            {{ $attendance->formatted_clock_out_time }}
+                        @endif
+                    </td>
                     <td class="table__data">{{ $attendance->break_hours}}</td>
                     <td class="table__data">{{ $attendance->total_hours}}</td>
                     <td class="table__data">
-                        <a class="attendance_detail" href="">詳細</a>
+                        <a class="attendance_detail" href="/attendance/{{ $attendance->id}}">詳細</a>
                     </td>
                 </tr>
             @endforeach

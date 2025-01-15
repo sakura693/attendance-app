@@ -50,7 +50,7 @@ class AttendanceController extends Controller
         $year = Carbon::parse($attendance->date)->format('Y年');
         $monthDay = Carbon::parse($attendance->date)->format('m月d日');
 
-        $clockInOut = $this->FormattedClockInOut($attendance->clock_in_time, $attendance->clock_out_time);
+        $clockInOut = $this->FormattedClockInOut($attendance->attendanceRequest->new_clock_in_time ?? $attendance->clock_in_time,$attendance->attendanceRequest->new_clock_out_time ?? $attendance->clock_out_time);
 
         $breakTime = $this->FormattedBreakTime($attendance->breakRecords);
 

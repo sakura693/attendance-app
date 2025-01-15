@@ -14,15 +14,20 @@ use Illuminate\Support\Facades\Auth;
 class CorrectionController extends Controller
 {
     public function correctionRequest(Request $request){
+        $user = Auth::user();
         $tab = $request->query('tab', 'pending');//初期値をpendingにしておき、ページにアクセスした際はpendingの方が表示されるようにする。
         
         $correctionsQuery = AttendanceRequest::with([
             'attendance',
             'attendance.user', 
             'status'
-        ])->whereHas('attendance', function($query){
-            $query->where('user_id', Auth::id());
-        });
+        ]);
+
+        if($user->role !== 'admin'){
+            $correctionsQuery->whereHas('attendance', function($query) use ($user){
+                $query->where('user_id', $user->id);
+            });
+        }
 
         if ($tab === 'pending'){
             $correctionsQuery->where('status_id', 1);

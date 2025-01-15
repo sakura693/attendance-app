@@ -115,8 +115,8 @@
                     <tr class="table__row">
                         <th class="table__label">備考</th>
                         <td class="table__data">
-                            @if ($attendance->attendanceRequest && $attendance->attendanceRequest->status_id === 1 &&
-                            ($attendance->attendanceRequest->reason || (!$attendance->attendanceRequest->reason && !$attendance->attendanceRequest->pending_reason)))
+                            <!--1.そもそもattendanceRequestが存在しない時（初回）、2.attendanceRequestが存在してstatus_id=2でreasonカラムに値が存在する時（承認取得後）-->
+                            @if (($attendance->attendanceRequest && $attendance->attendanceRequest->status_id === 2 && $attendance->attendanceRequest->reason) || !$attendance->attendanceRequest)
                                 <textarea class="remarks-section" rows="4" cols="37" name="reason" id="">{{ $attendance->attendanceRequest->reason ?? ''}}</textarea>
                             @endif
                         </td>
@@ -143,3 +143,4 @@
         </form>
     </div>
 </div>
+

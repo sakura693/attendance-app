@@ -83,3 +83,16 @@
     justify-content: right;
     margin-top: 10px;
 }
+
+/*承認ボタン*/
+.approval__btn {
+    margin: 70px 0 30px;
+}
+
+/*承認済みのボタン*/
+.approved__btn{
+    background: rgb(136, 136, 136);
+    border: none;
+    cursor: not-allowed;
+    margin: 70px 0 30px;
+}

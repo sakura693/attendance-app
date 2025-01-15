@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\LoginController; //追加
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController; //追加
 use App\Http\Controllers\AttendanceRegisterController; //追加
 use App\Http\Controllers\AdminController; //追加
+use App\Http\Controllers\ApprovalController; //追加
 
 
 
@@ -58,15 +59,19 @@ Route::post('/attendance/break/end', [AttendanceRegisterController::class, 'brea
 //修正フォーム送信先
 Route::post('/attendance/list', [CorrectionController::class, 'request']);
 
-
 //当日の勤怠情報を取得
 Route::get('/admin/attendance/list', [AdminController::class, 'getAdminAttendanceList']);
 
 //スタッフ一覧画面を取得
 Route::get('/admin/staff/list', [AdminController::class, 'getStaffList']);
+
 //特定のスタッフの詳細画面を取得
 Route::get('/admin/attendance/staff/{id}', [AdminController::class, 'getStaffAttendanceList']);
 
+//承認画面を取得
+Route::get('/stamp_correction_request/approve/{attendance_correct_request}', [ApprovalController::class, 'getApprovalPage']);
 
+//承認ボタンを押したときの挙動
+Route::post('/stamp_correction_request/approve/{attendance_correct_request}', [ApprovalController::class, 'update']);
 
 
