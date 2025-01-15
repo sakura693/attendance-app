@@ -51,50 +51,50 @@ class ApprovalController extends Controller
         $attendanceRequest = AttendanceRequest::where('attendance_id', $attendance_id)->firstOrFail();
 
         //attendanceの更新
-        if ($attendanceRequest->new_date !== null){
+        if (!empty($attendanceRequest->new_date)){
             $attendance->date = $attendanceRequest->new_date;
         }
 
-        if ($attendanceRequest->new_clock_in_time !== null){
+        if (!empty($attendanceRequest->new_clock_in_time)){
             $attendance->clock_in_time = $attendanceRequest->new_clock_in_time;
         }
         
-        if ($attendanceRequest->new_clock_out_time !== null){
+        if (!empty($attendanceRequest->new_clock_out_time)){
             $attendance->clock_out_time = $attendanceRequest->new_clock_out_time;
         }
 
         $attendance -> save();
 
         //breakの更新
-        $attendanceRequestBreaks = $attendanceRequest->attendanceRequestBreaks;
-
-        foreach($attendanceRequestBreaks as $requestBreak){
+        foreach($attendanceRequest->attendanceRequestBreaks as $requestBreak){
             //対応するBreakRecordを取得または新規作成
             $breakRecord = BreakRecord::firstOrNew([
                 'attendance_id' => $attendance_id,
                 'break_start' => $requestBreak->new_break_start, //Start timeを基準に一意性を確保
             ]);
 
-            if ($requestBreak->new_break_start !== null){
+            if (!empty($requestBreak->new_break_start)){
                 $breakRecord->break_start = $requestBreak->new_break_start;
             }
 
-            if ($requestBreak->new_break_end !== null){
+            if (!empty($requestBreak->new_break_end)){
                 $breakRecord->break_end = $requestBreak->new_break_end;
             }
 
             $breakRecord->save();
         }
 
-        
-        if ($attendanceRequest->pending_reason !== null){
-            $attendanceRequest->reason = $attendanceRequest->pending_reason;
+        //reasonの更新
+        if (!empty($attendanceRequest->pending_reason)){
+            $attendance->update([
+                'reason' => $attendanceRequest->pending_reason
+            ]); 
         }
 
-
         //attendanceRequestを保存(status_idも承認済み（2）に変更）
-        $attendanceRequest->status_id = 2;
-        $attendanceRequest->save(); 
+        $attendanceRequest->update([
+            'status_id' => 2,
+        ]);
 
         return redirect()->back();
     }

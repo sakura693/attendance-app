@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CorrectionController extends Controller
 {
+    //申請一覧画面を取得
     public function correctionRequest(Request $request){
         $user = Auth::user();
         $tab = $request->query('tab', 'pending');//初期値をpendingにしておき、ページにアクセスした際はpendingの方が表示されるようにする。
@@ -44,50 +45,124 @@ class CorrectionController extends Controller
         return view('correction-request', compact('corrections'));
     }
 
+
+
+
+
+
     //修正ボタンを押した後の動作
     public function request(CorrectionRequest $request){
-        $attendance = Attendance::findOrFail($request->attendance_id);    
+        $attendance = Attendance::with('breakRecords')->findOrFail($request->attendance_id); 
 
-        //フォームが送信される度に⇩のカラムには値が保存される
-        $attendanceRequest = AttendanceRequest::create([
-            'attendance_id' => $attendance->id,
-            'status_id' => 1, //承認待ち
-        ]);
-
+        //管理者判定
+        $isAdmin = auth()->user()->role === 'admin';
+        
         //date部分
         $dateString = $request->year . $request->monthDay;
         $date = Carbon::createFromFormat('Y年m月d日', $dateString)->format('Y-m-d');
+        
 
-        // 日付の変更を検出
+        if ($isAdmin){
+            //管理者の場合直接attendanceを更新
+            $this->updateAttendance($attendance, $request, $date);
+            }else { 
+            //一般ユーザーの場合attendanceRequestを作成
+            $attendanceRequest = AttendanceRequest::create([
+                'attendance_id' => $attendance->id,
+                'status_id' => 1, //承認待ち
+            ]);
+
+            $this->makeAttendanceRequest($attendanceRequest, $attendance, $request, $date);
+        }
+        return redirect('/attendance/list');
+    }
+
+    //管理者によるattendanceの直接更新処理
+    private function updateAttendance($attendance, $request, $date){
+        // 日付の更新
+        if ($date !== $attendance->date) {
+            $attendance->update([
+                'date' => $date,
+            ]);
+        }
+
+         //出勤・退勤時間の更新
+        foreach(['clock_in_time', 'clock_out_time'] as $field){
+            $requestValue = $request->$field;
+            //テーブルの値を取得しリクエストと同じフォーマットに変換⇩
+            $attendanceValue = substr($attendance->$field ?? '',  0, 5);
+            
+            //値が異なる場合のみ変更を検出
+            if ($requestValue && $requestValue !== $attendanceValue){
+                $attendance->update([
+                    $field => $requestValue,
+                ]);
+            }
+        }
+
+        //備考欄（reason）の更新
+        if (!empty($request->reason)){
+            $attendance->update([
+                'reason' => $request->reason
+            ]);
+        }
+
+        foreach ($request->break_start as $index => $start){
+            //$startと$endはそれぞれリクエストのbreak_startとbreak_endを指す
+            $end = $request->break_end[$index] ?? null;
+
+            //データベースの値をとリクエストを比較
+            $existingBreakRecord = $attendance->breakRecords[$index] ?? null;
+
+            //既にbreakレコードがある時
+            if($existingBreakRecord){
+                $existingStart = substr($existingBreakRecord->break_start, 0,5);
+                $existingEnd = substr($existingBreakRecord->break_end, 0,5);
+
+                if ($start !== $existingStart || $end !== $existingEnd){
+                    $existingBreakRecord->update([
+                        'break_start' => $start,
+                        'break_end' => $end
+                    ]);
+                }
+            }else{
+                //breakレコードがない時
+                $attendance->breakRecords()->create([
+                    'break_start' => $start,
+                    'break_end' => $end
+                ]);
+            }
+        }
+    }
+        
+
+    //一般ユーザーの承認申請処理
+    private function makeAttendanceRequest($attendanceRequest, $attendance, $request, $date){
+        //日付の変更
         if ($date !== $attendance->date) {
             $attendanceRequest->update([
                 'new_date' => $date,
             ]);
         }
 
-        //出勤・退勤時間の変更を検出
+        //出勤・退勤時間の変更
         foreach(['clock_in_time', 'clock_out_time'] as $field){
             $requestValue = $request->$field;
-            $attendanceValue = $attendance->$field;
-            //データベースの値をリクエストデータと同じフォーマットに変換
-            if (!empty($attendanceValue)){
-                $attendanceValue = substr($attendanceValue, 0, 5); //'H:i'に変換
-            }
-
+            //テーブルの値を取得しリクエストと同じフォーマットに変換⇩
+            $attendanceValue = substr($attendance->$field ?? '',  0, 5);
+            
             //値が異なる場合のみ変更を検出
-            if (!empty($request) && $requestValue !== $attendanceValue){
+            if ($requestValue && $requestValue !== $attendanceValue){
                 $attendanceRequest->update([
                     "new_{$field}" => $requestValue,
                 ]);
             }
         }
-        
-        //reasonの比較
-        $currentReason = $attendance->attendanceRequest->reason ?? null; // 存在しない場合は null を設定
 
-        if (!empty($request->reason) && $request->reason !== $currentReason) {
+        //reason部分
+        if (!empty($request->reason)){
             $attendanceRequest->update([
-                'pending_reason' => $request->reason,
+                'pending_reason' => $request->reason
             ]);
         }
 
@@ -106,11 +181,10 @@ class CorrectionController extends Controller
                 'new_break_start' => $start !== $existingStart ? $start : null,
                 'new_break_end' => $end !== $existingEnd ? $end : null,
             ];
+
             if ($data['new_break_start'] || $data['new_break_end']){
                 AttendanceRequestBreak::create(array_filter($data));
             }
-
-            }
-        return redirect('/attendance/list');
-    }
+        }
+    }      
 }

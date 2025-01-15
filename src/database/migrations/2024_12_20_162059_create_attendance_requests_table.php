@@ -20,7 +20,6 @@ class CreateAttendanceRequestsTable extends Migration
             $table->date('new_date')->nullable();
             $table->time('new_clock_in_time')->nullable();
             $table->time('new_clock_out_time')->nullable();
-            $table->string('reason')->nullable();
             $table->string('pending_reason')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('created_at')->useCurrent();

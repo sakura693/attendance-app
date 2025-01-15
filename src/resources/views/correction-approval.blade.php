@@ -58,8 +58,10 @@
                     <th class="table__label">備考</th>
                     <td class="table__data">
                         @if ($attendance->attendanceRequest && $attendance->attendanceRequest->status_id === 1)
-                            <p>{{ $attendance->attendanceRequest->pending_reason ?? ''}}</p>
-                            @endif
+                            <p>{{ $attendance->attendanceRequest->pending_reason ?? '' }}</p>
+                        @else
+                            <p>{{ $attendance->reason ?? '' }}</p>
+                        @endif
                     </td>
                 </tr>
             </table>
