@@ -23,13 +23,24 @@ class ApprovalController extends Controller
     public function getApprovalPage($attendance_correct_request){
         $attendance = Attendance::with(['user', 'breakRecords', 'attendanceRequest'])->findOrFail($attendance_correct_request);
 
+        //空のコレクションを設定
+        $attendanceRequestBreaks = collect();
+
+        //attendanceRequestBreakを取得
+        if($attendance->attendanceRequest){
+            $attendanceRequestBreaks = AttendanceRequestBreak::where('attendance_request_id', $attendance->attendanceRequest->id)->get();
+        }
+
+        // $attendance に設定
+        $attendance->attendanceRequestBreaks = $attendanceRequestBreaks;
+
         //日付を年と月日に分ける
         $year = Carbon::parse($attendance->date)->format('Y年');
         $monthDay = Carbon::parse($attendance->date)->format('m月d日');
 
         $clockInOut = $this->FormattedClockInOut($attendance->attendanceRequest->new_clock_in_time ?? $attendance->clock_in_time,$attendance->attendanceRequest->new_clock_out_time ?? $attendance->clock_out_time);
 
-        $breakTime = $this->FormattedBreakTime($attendance->breakRecords);
+        $breakTime = $this->FormattedBreakTime($attendance->attendanceRequestBreaks, $attendance->breakRecords);
 
         for ($i = count($breakTime); $i < 2; $i++) {
             $breakTime[] = [

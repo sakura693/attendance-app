@@ -22,12 +22,25 @@ trait DetailFormatter
     }
 
     //休憩時間
-    public function FormattedBreakTime($breakRecords): array{
+    public function FormattedBreakTime($attendanceRequestBreaks, $breakRecords): array{
+        //attendanceRequestBreaksに値がある時
+        if($attendanceRequestBreaks && $attendanceRequestBreaks->isNotEmpty()){
+            return $attendanceRequestBreaks->map(function ($break){
+                return [
+                    'break_start' => $this->formatTime($break->new_break_start),
+                    'break_end' =>$this->formatTime($break->new_break_end),
+                ];
+            })->toArray();
+        }     
+        //値がない時
         return $breakRecords->map(function ($break) {
             return [
                 'break_start' => $this->formatTime($break->break_start),
                 'break_end' => $this->formatTime($break->break_end),
             ];
-        })->toArray();
+        })->toArray();      
     }
 }
+
+
+
