@@ -34,6 +34,9 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        //カスタムLoginResponseを登録
+        $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
+
         Fortify::createUsersUsing(CreateNewUser::class);
 
         Fortify::registerView(function(){

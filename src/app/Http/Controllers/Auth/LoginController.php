@@ -17,7 +17,7 @@ class LoginController extends Controller
             return app(LoginResponse::class);
         }
         return back()->withErrors([
-            'email' => 'ログイン情報が登録されていません。'
+            'email' => 'ログイン情報が登録されていません'
         ]);
     }
 

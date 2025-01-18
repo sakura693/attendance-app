@@ -10,6 +10,8 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController; //追加
 use App\Http\Controllers\AttendanceRegisterController; //追加
 use App\Http\Controllers\AdminController; //追加
 use App\Http\Controllers\ApprovalController; //追加
+use Illuminate\Foundation\Auth\EmailVerificationRequest; //メール認証
+use Illuminate\Http\Request;
 
 
 
@@ -28,7 +30,6 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('/attendance', [AttendanceRegisterController::class, 'attendanceRegister']);
 
 //管理者ログイン画面取得
 Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->middleware(['guest'])->name('admin.login');
@@ -37,41 +38,69 @@ Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->m
 Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])
 ->middleware(['guest'])->name('admin.login.post');
 
-//勤怠一覧画面を取得
-Route::get('/attendance/list', [AttendanceController::class, 'getAttendanceList']);
+/*ユーザー認証ルート*/
+Route::middleware('auth')->group(function (){
+    //勤怠登録画面を取得
+    Route::get('/attendance', [AttendanceRegisterController::class, 'attendanceRegister']);
 
-//勤怠詳細画面を取得
-Route::get('/attendance/{attendance_id}', [AttendanceController::class, 'getAttendanceDetail']);
+    //勤怠一覧画面を取得
+    Route::get('/attendance/list', [AttendanceController::class, 'getAttendanceList']);
 
-//申請一覧画面を取得
-Route::get('/stamp_correction_request/list', [CorrectionController::class, 'correctionRequest']);
+    //勤怠詳細画面を取得
+    Route::get('/attendance/{attendance_id}', [AttendanceController::class, 'getAttendanceDetail']);
 
-/*勤怠登録のルート⇩*/
-//出勤開始
-Route::post('/attendance/start', [AttendanceRegisterController::class, 'clockIn']);
-//退勤
-Route::post('/attendance/end', [AttendanceRegisterController::class, 'clockOut']);
-//休憩開始
-Route::post('/attendance/break/start', [AttendanceRegisterController::class, 'breakStart']);
-//休憩終了
-Route::post('/attendance/break/end', [AttendanceRegisterController::class, 'breakEnd']);
+    //申請一覧画面を取得
+    Route::get('/stamp_correction_request/list', [CorrectionController::class, 'correctionRequest']);
 
-//修正フォーム送信先
-Route::post('/attendance/list', [CorrectionController::class, 'request']);
+    /*勤怠登録のルート⇩*/
+    //出勤開始
+    Route::post('/attendance/start', [AttendanceRegisterController::class, 'clockIn']);
+    //退勤
+    Route::post('/attendance/end', [AttendanceRegisterController::class, 'clockOut']);
+    //休憩開始
+    Route::post('/attendance/break/start', [AttendanceRegisterController::class, 'breakStart']);
+    //休憩終了
+    Route::post('/attendance/break/end', [AttendanceRegisterController::class, 'breakEnd']);
 
-//当日の勤怠情報を取得
-Route::get('/admin/attendance/list', [AdminController::class, 'getAdminAttendanceList']);
+    //修正フォーム送信先
+    Route::post('/attendance/list', [CorrectionController::class, 'request']);
+});
 
-//スタッフ一覧画面を取得
-Route::get('/admin/staff/list', [AdminController::class, 'getStaffList']);
 
-//特定のスタッフの詳細画面を取得
-Route::get('/admin/attendance/staff/{id}', [AdminController::class, 'getStaffAttendanceList']);
+/*管理者専用ルート*/
+Route::middleware(['auth', 'admin'])->group(function(){
+    //当日の勤怠情報を取得
+    Route::get('/admin/attendance/list', [AdminController::class, 'getAdminAttendanceList']);
 
-//承認画面を取得
-Route::get('/stamp_correction_request/approve/{attendance_correct_request}', [ApprovalController::class, 'getApprovalPage']);
+    //スタッフ一覧画面を取得
+    Route::get('/admin/staff/list', [AdminController::class, 'getStaffList']);
 
-//承認ボタンを押したときの挙動
-Route::post('/stamp_correction_request/approve/{attendance_correct_request}', [ApprovalController::class, 'update']);
+    //特定のスタッフの詳細画面を取得
+    Route::get('/admin/attendance/staff/{id}', [AdminController::class, 'getStaffAttendanceList']);
 
+    //承認画面を取得
+    Route::get('/stamp_correction_request/approve/{attendance_correct_request}', [ApprovalController::class, 'getApprovalPage']);
+
+    //承認ボタンを押したときの挙動
+    Route::post('/stamp_correction_request/approve/{attendance_correct_request}', [ApprovalController::class, 'update']);
+});
+
+
+//メール認証画面を取得
+Route::get('/email/verify', function(){
+    return view('auth.verify-email');
+})->middleware('auth');
+
+//メールの再送信
+Route::post('/email/verification-notification', function(Request $request){
+    $request->user()->sendEmailVerificationNotification(); //認証メールを再送信
+    session()->put('resent', true); //セッションに再送信を記録
+    return back();
+})->middleware('auth');
+
+//認証後の挙動
+Route::get('email/verify/{id}/{hash}', function(EmailVerificationRequest $request){
+    $request->fulfill();
+    return redirect('/attendance');
+})->name('verification.verify');
 
