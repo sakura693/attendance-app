@@ -1,0 +1,10 @@
+.export-btn__inner{
+    margin-top: 40px;
+    display: flex;
+    justify-content: right;
+}
+
+.export-form{
+    width: 12%;
+}
+

@@ -83,6 +83,9 @@ Route::middleware(['auth', 'admin'])->group(function(){
 
     //承認ボタンを押したときの挙動
     Route::post('/stamp_correction_request/approve/{attendance_correct_request}', [ApprovalController::class, 'update']);
+
+    //csv出力
+    Route::post('/admin/attendance/staff/{id}/export', [AdminController::class, 'exportCsv']);
 });
 
 

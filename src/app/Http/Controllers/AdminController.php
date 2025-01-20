@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Attendance; //追加
 use App\Traits\AttendanceFormatter; //traitファイルをインポート
 use App\Traits\AttendanceTrait; //もう一つのtraitファイルをインポート
+use Illuminate\Support\Facades\Response; //csv出力
 
 class AdminController extends Controller
 {
@@ -51,6 +52,7 @@ class AdminController extends Controller
         return view('staff-list', compact('users'));
     }
 
+
     //特定のスタッフの勤怠情報取得
     public function getStaffAttendanceList(Request $request, $user_id){
         $user = User::find($user_id);
@@ -71,4 +73,47 @@ class AdminController extends Controller
         return view('staff-attendance-list', compact('user', 'currentMonth', 'attendances'));
     }
 
+    //csv出力機能
+    public function exportCsv($user_id){
+        /*1.データを取得*/
+        $attendances = Attendance::where('user_id', $user_id)->orderBy('date', 'asc')->get();
+        $attendances = $this->formatAttendanceData($attendances);
+
+        /*2.csvデータを作成*/
+        $csvData = [];
+        $csvData[] = ['日付', '出勤', '退勤', '休憩', '合計']; //csvデータのヘッダー部分
+        
+        //各値を取り出して配列形式にする
+        foreach ($attendances as $attendance){
+            $csvData[] = [
+                $attendance->formatted_date,
+                $attendance->formatted_clock_in_time,
+                $attendance->formatted_clock_out_time,
+                $attendance->break_hours,
+                $attendance->total_hours,
+            ];
+        }
+
+        /*3.CSVを生成*/
+        $fileName = 'attendances_' . now()->format('Ymd_His') . '.csv';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$fileName\"",
+            'Cache-Control' => 'no-store, no-cache, must-revalidate',
+            'Pragma' => 'no-cache'
+        ];
+
+        //コールバック関数：CSVデータを生成し、ストリーム（データをリアルタイムで生成・出力）を処理する
+        $callback = function () use ($csvData){
+            $file = fopen('php://output', 'w');
+            fwrite($file, "\xEF\xBB\xBF");
+            foreach ($csvData as $row){
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        };
+
+        /*4.レスポンスを返す*/
+        return Response::stream($callback, 200, $headers);
+    }
 }

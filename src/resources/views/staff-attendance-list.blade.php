@@ -3,6 +3,7 @@
 <!--css読み込み-->
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/attendance-list.css') }}">
+<link rel="stylesheet" href="{{ asset('css/staff-attendance-list.css') }}">
 <!--font awesomをインポート-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @endsection
@@ -62,5 +63,13 @@
                 </tr>
             @endforeach
         </table>
+
+        <!--csvボタン-->
+        <div class="export-btn__inner">
+            <form class="export-form" action="/admin/attendance/staff/{{$user->id}}/export" method="post">
+                @csrf
+                <button class="export-btn btn" type="submit">csv出力</button>
+            </form>
+        </div>
     </div>
 </div>
