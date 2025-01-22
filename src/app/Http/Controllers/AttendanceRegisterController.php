@@ -19,7 +19,7 @@ class AttendanceRegisterController extends Controller
         $userId = auth()->id();
 
         //当日の出勤記録を取得（存在しない場合はnull）
-        $attendance = Attendance::where('user_id', $userId)->whereDate('date', Carbon::today())/*当日のレコードを検索*/->first();
+        $attendance = Attendance::where('user_id', $userId)->whereDate('date', Carbon::today())->first();
 
         //最新の休憩記録を取得
         $latestBreakRecord = $attendance ? BreakRecord::where('attendance_id', $attendance->id)->latest('break_start')->first()

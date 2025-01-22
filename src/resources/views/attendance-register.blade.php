@@ -7,8 +7,8 @@
 
 <!--本体-->
 @section('content')
-
 @include('components.header')
+
 <div class="register__content">
     <div class="register__content--inner">
         <div class="work__status">{{ $status }}</div>
@@ -43,3 +43,4 @@
         </div>
     </div>
 </div>
+@endsection
