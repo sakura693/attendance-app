@@ -45,8 +45,7 @@ class CorrectionController extends Controller
         return view('correction-request', compact('corrections'));
     }
 
-
-
+    
     //修正ボタンを押した後の動作
     public function request(CorrectionRequest $request){
         $attendance = Attendance::with('breakRecords')->findOrFail($request->attendance_id); 

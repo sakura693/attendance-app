@@ -18,7 +18,6 @@
         <!--カレンダー部分-->
         <div class="calendar">
             <form class="calendar__conteinar" class="get__month" method="get" action="/admin/attendance/list">
-                @csrf
                 <div class="calendar__inner">
                     <!--矢印アイコン-->
                     <i class="fa-solid fa-arrow-left arrow-left__icon" style="color: #a8a7a3;"></i>
@@ -68,3 +67,4 @@
         </table> 
     </div>
 </div>
+@endsection
