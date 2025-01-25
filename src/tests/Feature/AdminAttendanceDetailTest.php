@@ -5,17 +5,17 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations; //追加
+use Illuminate\Foundation\Testing\DatabaseMigrations; 
 use Database\Seeders\DatabaseSeeder;
-use App\Models\User;
-use App\Models\Attendance;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\CorrectionRequest;
 use Illuminate\Validation\ValidationException;
+use App\Models\User;
+use App\Models\Attendance;
 use App\Models\AttendanceRequest;
 
-class AdminAttendanceDetail extends TestCase
+class AdminAttendanceDetailTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -25,7 +25,7 @@ class AdminAttendanceDetail extends TestCase
         $this->seed(DatabaseSeeder::class);
     }
 
-    //勤怠詳細画面の取得
+    //管理者勤怠詳細画面の取得
     public function test_admin_get_attendance_detail(){
         $admin = User::find(2);
         $attendance = Attendance::find(1);        Carbon::setTestNow('2024-12-21');
@@ -42,9 +42,8 @@ class AdminAttendanceDetail extends TestCase
     public function test_admin_validation_rules($invalidData, $expectedErrorMessage){
         $admin = User::find(2);
         $attendance = Attendance::find(3);
-        $response = $this->actingAs($admin)->get("/attendance/{$attendance->id}");  
+        $response = $this->actingAs($admin)->get("/attendance/{$attendance->id}"); 
 
-        //CorrectionRequestをモック化
         $mockRequest = new class extends CorrectionRequest {
             public function passedValidation()
             {
@@ -56,7 +55,6 @@ class AdminAttendanceDetail extends TestCase
         try {
             $mockRequest->passedValidation();
         } catch (ValidationException $e) {
-            // 例外メッセージの確認
             $this->assertArrayHasKey('validation_error', $e->errors());
             $this->assertEquals(
                 [$expectedErrorMessage],
@@ -69,7 +67,6 @@ class AdminAttendanceDetail extends TestCase
 
     public function validationDataProvider(){
         return [
-            //出勤時間＞退勤時間
             'case 1: clock_in_time_after_clock_out_time'=> [
                 [
                     'clock_in_time' => '18:00',
@@ -98,7 +95,7 @@ class AdminAttendanceDetail extends TestCase
         ];
     }
 
-    //管理者：備考欄が未記入の時エラーになる
+    //備考欄が未記入の場合
     public function test_admin_reason_is_required(){
         $admin = User::find(2);
         $attendance = Attendance::find(3);

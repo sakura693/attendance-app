@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations; //追加
+use Illuminate\Foundation\Testing\DatabaseMigrations; 
 use Database\Seeders\DatabaseSeeder;
 use App\Models\User;
 use App\Models\Attendance;
@@ -20,7 +20,7 @@ class AttendanceListTest extends TestCase
         $this->seed(DatabaseSeeder::class);
     }
 
-    //勤怠一覧画面が取得される・現在の月が確認できる
+    //勤怠一覧画面の取得・現在の月が確認できる
     public function test_attendance_list_is_displayed_correctly(){
         $user = User::find(1);
         \Carbon\Carbon::setTestNow('2025-01-01');
@@ -71,7 +71,7 @@ class AttendanceListTest extends TestCase
         }
     }
 
-    //詳細ボタンの確認
+    //詳細ボタンが機能する
     public function test_detail_button_functions_correctly(){
         $user = User::find(1);
         \Carbon\Carbon::setTestNow('2024-12-01');

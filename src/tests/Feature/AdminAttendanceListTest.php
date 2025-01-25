@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations; //追加
+use Illuminate\Foundation\Testing\DatabaseMigrations; 
 use Database\Seeders\DatabaseSeeder;
 use App\Models\User;
 use App\Models\Attendance;
@@ -21,13 +21,14 @@ class AdminAttendanceListTest extends TestCase
         $this->seed(DatabaseSeeder::class);
     }
 
-    //その日の日付が表示される・勤怠情報が取得できる
+    //勤怠情報の取得
     public function test_get_admin_attendance_list(){
         $admin = User::find(2);
         $user = User::find(1);
         Carbon::setTestNow('2024-12-21');
         $date = Carbon::now();
         $response = $this->actingAs($admin)->get('/admin/attendance/list'); 
+        //その日の日付が表示される
         $response->assertSee('2024/12/21');
 
         $attendances = Attendance::where('date', $date)->get();

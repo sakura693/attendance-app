@@ -19,10 +19,8 @@ Dockerビルド <br>
     DB_DATABASE=laravel_db <br>
     DB_USERNAME=laravel_user <br>
     DB_PASSWORD=laravel_pass <br>
-4. php artisan key:generate
-
-//まだやってないけど
-5. php artisan migrate
+4. php artisan key:generate <br>
+5. php artisan migrate <br>
 6. php artisan db:seed
 
 
@@ -46,7 +44,7 @@ vendor/bin/phpunit tests/Feature/テストファイル名
 
 
 # 開発環境
-・ログイン画面？？？ <br>
+・ログイン画面: http://localost/login <br>
 ・phpmyadmin: http://localhost:8080/
 
 
@@ -58,3 +56,4 @@ vendor/bin/phpunit tests/Feature/テストファイル名
 
 
 # ER図
+![alt text](image.png)

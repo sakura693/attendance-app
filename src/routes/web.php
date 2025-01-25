@@ -4,13 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CorrectionController;
-use App\Http\Controllers\Auth\RegisterController; //追加
-use App\Http\Controllers\Auth\LoginController; //追加
-use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController; //追加
-use App\Http\Controllers\AttendanceRegisterController; //追加
-use App\Http\Controllers\AdminController; //追加
-use App\Http\Controllers\ApprovalController; //追加
-use Illuminate\Foundation\Auth\EmailVerificationRequest; //メール認証
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController; 
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController; 
+use App\Http\Controllers\AttendanceRegisterController; 
+use App\Http\Controllers\AdminController; 
+use App\Http\Controllers\ApprovalController; 
+use Illuminate\Foundation\Auth\EmailVerificationRequest; 
 use Illuminate\Http\Request;
 
 
@@ -29,7 +29,6 @@ use Illuminate\Http\Request;
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout']);
-
 
 //管理者ログイン画面取得
 Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->middleware(['guest'])->name('admin.login');
@@ -81,7 +80,7 @@ Route::middleware(['auth', 'admin'])->group(function(){
     //承認画面を取得
     Route::get('/stamp_correction_request/approve/{attendance_correct_request}', [ApprovalController::class, 'getApprovalPage']);
 
-    //承認ボタンを押したときの挙動
+    //承認機能
     Route::post('/stamp_correction_request/approve/{attendance_correct_request}', [ApprovalController::class, 'update']);
 
     //csv出力
@@ -96,8 +95,8 @@ Route::get('/email/verify', function(){
 
 //メールの再送信
 Route::post('/email/verification-notification', function(Request $request){
-    $request->user()->sendEmailVerificationNotification(); //認証メールを再送信
-    session()->put('resent', true); //セッションに再送信を記録
+    $request->user()->sendEmailVerificationNotification(); 
+    session()->put('resent', true); 
     return back();
 })->middleware('auth');
 

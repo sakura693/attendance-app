@@ -5,11 +5,11 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations; //追加
+use Illuminate\Foundation\Testing\DatabaseMigrations; 
 use Database\Seeders\DatabaseSeeder;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Attendance;
-use Carbon\Carbon;
 
 class AdminStaffAttendanceTest extends TestCase
 {
@@ -21,7 +21,7 @@ class AdminStaffAttendanceTest extends TestCase
         $this->seed(DatabaseSeeder::class);
     }
 
-    //スタッフ一覧ページを取得・特定のスタッフの勤怠詳細を取得
+    //スタッフ一覧ページ・特定のスタッフの勤怠詳細を取得
     public function test_admin_get_staff_list(){
         $admin = User::find(2);
         $user = User::find(1);       
@@ -31,6 +31,7 @@ class AdminStaffAttendanceTest extends TestCase
         $response->assertSee('general@example.com');
 
         $response = $this->get("/admin/attendance/staff/{$user->id}");
+        $response->assertSee('一般ユーザー');
         $response->assertSee('12/01 (日)');
         $response->assertSee('12/21 (土)');
     } 
@@ -71,6 +72,7 @@ class AdminStaffAttendanceTest extends TestCase
         $response = $this->get("/admin/attendance/staff/{$user->id}");
 
         $response = $this->get("/attendance/{$attendance->id}");
+        $response->assertSee('一般ユーザー');
         $response->assertSee('2024年');
         $response->assertSee('12月01日');
     } 

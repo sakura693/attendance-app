@@ -36,12 +36,11 @@ class CorrectionRequest extends FormRequest
         $breakStarts = $this->input('break_start', []);
         $breakEnds = $this->input('break_end', []);
 
-        //出勤時間>退勤時間の場合のバリデーション
+        //出勤時間は退勤時間よりも早くなくてはならない
         if (strtotime($clockIn) >= strtotime($clockOut)){
             $this->failWithMessage('出勤時間もしくは退勤時間が不適切な値です。');
         }
 
-        //休憩時間の追加チェック
         foreach ($breakStarts as $index=> $breakStart){
             $breakEnd = $breakEnds[$index] ?? null;
             if (
@@ -67,7 +66,6 @@ class CorrectionRequest extends FormRequest
 
     protected function failWithMessage(string $message){
         throw \Illuminate\Validation\ValidationException::withMessages([
-            //validation_errorはキーでバリデーションを管理するための識別子。このキーを使って、ビューで特定のエラーメッセージを取得できる。
             'validation_error' => [$message],
         ]);
     }
