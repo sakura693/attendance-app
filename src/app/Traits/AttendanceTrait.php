@@ -6,7 +6,6 @@ use Carbon\Carbon;
 
 trait AttendanceTrait
 {
-    //月の変更
     public function monthChange(string $currentMonth, ?string $action): string
     {
         if($action === 'next'){
@@ -17,7 +16,6 @@ trait AttendanceTrait
         return $currentMonth;
     }
 
-    //月の開始日と終了日を計算
     public function getMonthRange(string $currentMonth):array{
         $startOfMonth = Carbon::createFromFormat('Y/m', $currentMonth)->startOfMonth();
         $endOfMonth = Carbon::createFromFormat('Y/m', $currentMonth)->endOfMonth();

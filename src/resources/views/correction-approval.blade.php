@@ -1,18 +1,14 @@
 @extends('layouts.app')
 
-<!--css読み込み-->
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/attendance-detail.css') }}">
 @endsection
 
-<!--本体-->
 @section('content')
-
 @include('components.header')
 <div class="content">
     <div class="content__inner">
         <h1 class="content__title">勤怠詳細</h1>
-
         <form class="approval-form" action="" method="post">
             @csrf
             <table class="table">
@@ -20,7 +16,6 @@
                     <th class="table__label">名前</th>
                     <td class="table__data">{{ $attendance->user->name }}</td>
                 </tr>
-
                 <tr class="table__row">
                     <th class="table__label">日付</th>
                     <td class="table__data text__data">
@@ -28,14 +23,12 @@
                         <p>{{$monthDay}}</p>
                     </td>
                 </tr>
-
                 <tr class="table__row">
                     <th class="table__label">出勤・退勤</th>
                     <td class="table__data">
                         <p>{{ $clockInOut['clock_in'] }}<span class="time_mark">~</span>{{ $clockInOut['clock_out'] }}</p>
                     </td>
                 </tr>
-
                 <tr class="table__row">
                     <th class="table__label">休憩</th>
                     <td class="table__data">
@@ -44,7 +37,6 @@
                         @endif
                     </td>
                 </tr>
-
                 <tr class="table__row">
                     <th class="table__label">休憩2</th>
                     <td class="table__data">
@@ -53,7 +45,6 @@
                         @endif
                     </td>
                 </tr>
-
                 <tr class="table__row">
                     <th class="table__label">備考</th>
                     <td class="table__data">
@@ -65,7 +56,6 @@
                     </td>
                 </tr>
             </table>
-
             <div class="btn__inner">
                 @if ($attendance->attendanceRequest && $attendance->attendanceRequest->status_id === 1)
                     <button class="approval__btn small-btn">承認</button>

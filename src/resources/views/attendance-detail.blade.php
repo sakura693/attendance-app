@@ -1,13 +1,10 @@
 @extends('layouts.app')
 
-<!--css読み込み-->
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/attendance-detail.css') }}">
 @endsection
 
-<!--本体-->
 @section('content')
-
 @include('components.header')
 <div class="content">
     <div class="content__inner">
@@ -16,15 +13,12 @@
         <form class="correction-form" action="/attendance/list" method="post">
             @csrf
             <input type="hidden" name="attendance_id" value="{{$attendance->id}}">
-
-            <!--承認待ちの場合-->
             @if ($attendance->attendanceRequest && $attendance->attendanceRequest->status_id === 1)
                 <table class="table">
                     <tr class="table__row">
                         <th class="table__label">名前</th>
                         <td class="table__data">{{ $attendance->user->name }}</td>
                     </tr>
-
                     <tr class="table__row">
                         <th class="table__label">日付</th>
                         <td class="table__data text__data">
@@ -32,21 +26,18 @@
                             <p>{{$monthDay}}</p>
                         </td>
                     </tr>
-
                     <tr class="table__row">
                         <th class="table__label">出勤・退勤</th>
                         <td class="table__data">
                             <p>{{ $clockInOut['clock_in'] }}<span class="time_mark">~</span>{{ $clockInOut['clock_out'] }}</p>
                         </td>
                     </tr>
-
                     <tr class="table__row">
                         <th class="table__label">休憩</th>
                         <td class="table__data">
                             <p>{{ $breakTime[0]['break_start']}}<span class="time_mark">~</span>{{ $breakTime[0]['break_end'] }}</p>
                         </td>
                     </tr>
-
                     <tr class="table__row">
                         <th class="table__label">休憩2</th>
                         <td class="table__data">
@@ -55,7 +46,6 @@
                             @endif
                         </td>
                     </tr>
-
                     <tr class="table__row">
                         <th class="table__label">備考</th>
                         <td class="table__data">
@@ -66,15 +56,12 @@
                     </tr>
                 </table>
                 <p class="text__remark">*承認待ちのため修正はできません</p>
-            
-            <!--修正前-->
             @else
                 <table class="table">
                     <tr class="table__row">
                         <th class="table__label">名前</th>
                         <td class="table__data">{{ $attendance->user->name }}</td>
                     </tr>
-
                     <tr class="table__row">
                         <th class="table__label">日付</th>
                         <td class="table__data">
@@ -82,7 +69,6 @@
                             <input class="table__input month" type="text" name="monthDay" value="{{ old('date', $monthDay) }}">
                         </td>
                     </tr>
-
                     <tr class="table__row">
                         <th class="table__label">出勤・退勤</th>
                         <td class="table__data">
@@ -91,7 +77,6 @@
                             <input class="table__input clock_out" type="text" name="clock_out_time" value="{{ old('clock_out_time', $clockInOut['clock_out']) }}">
                         </td>
                     </tr>
-
                     <tr class="table__row">
                         <th class="table__label">休憩</th>
                         <td class="table__data">    
@@ -100,7 +85,6 @@
                             <input class="table__input break_end" type="text" name="break_end[0]" value="{{ old('break_end.0', $breakTime[0]['break_end']) }}">
                         </td>
                     </tr>
-
                     <tr class="table__row">
                         <th class="table__label">休憩2</th>
                         <td class="table__data">
@@ -111,7 +95,6 @@
                             @endif
                         </td>
                     </tr>
-
                     <tr class="table__row">
                         <th class="table__label">備考</th>
                         <td class="table__data">

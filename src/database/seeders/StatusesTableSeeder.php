@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB; //追加
+use Illuminate\Support\Facades\DB; 
 
 class StatusesTableSeeder extends Seeder
 {

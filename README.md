@@ -1,8 +1,5 @@
 # attendance-app
 
-フリマアプリの模擬解答部分のmakefile部分もよく参考にすること！
-
-
 # 環境構築
 Dockerビルド <br>
 ・Dockerを起動する
@@ -13,40 +10,39 @@ Dockerビルド <br>
 1. docker-compose exec php bash
 2. composer install
 3. .envに以下の環境変数を追加 <br>
+```
     DB_CONNECTION=mysql <br>
     DB_HOST=mysql <br>
     DB_PORT=3306 <br>
     DB_DATABASE=laravel_db <br>
     DB_USERNAME=laravel_user <br>
     DB_PASSWORD=laravel_pass <br>
+```
 4. php artisan key:generate <br>
 5. php artisan migrate <br>
 6. php artisan db:seed
 
-
 # メール認証
-フリマアプリの模擬解答参照
-自分でmailtrapに登録してもらう。（.envファイル）
+mailtrapというツールを使用しています。</br>
+以下のリンクから会員登録を行ってください。</br>
+https://mailtrap.io/
 
-# テストアカウント
-模擬解答参照
+Email Testingで新規メールボックスを作成してください。</br>
+そして、メールボックスのIntegrationから「Laravel 7.x and 8.x」を選択し、.envファイルにMAIL_MAILERからMAIL_ENCRYPTIONまでの項目をコピー＆ペーストしてください。</br>
+MAIL_FROM_ADDRESSは任意のメールアドレスを入力してください。　
 
 # PHPUnitを利用したテストに関して
 以下のコマンド：
 ```
-//このキー作成コマンド必要？（必要なら.env.testingのAPP_KEYを事前に空にしておいて、その後⇩のコマンドでキー作成）
 php artisan key:generate --env=testing
-
 docker-compose exec php bash
 php artisan migrate:fresh --env=testing
 vendor/bin/phpunit tests/Feature/テストファイル名
 ```
 
-
 # 開発環境
 ・ログイン画面: http://localost/login <br>
 ・phpmyadmin: http://localhost:8080/
-
 
 # 使用技術（実行環境）
 ・PHP 8.3.9 <br>
@@ -54,6 +50,5 @@ vendor/bin/phpunit tests/Feature/テストファイル名
 ・MySQL 8.0.26 <br>
 ・nginx 1.18.0
 
-
 # ER図
-![alt text](image.png)
+![ER図](image.png)

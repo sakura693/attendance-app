@@ -1,14 +1,11 @@
 @extends('layouts.app')
 
-<!--css読み込み-->
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/attendance-register.css') }}">
 @endsection
 
-<!--本体-->
 @section('content')
 @include('components.header')
-
 <div class="register__content">
     <div class="register__content--inner">
         <div class="work__status">{{ $status }}</div>

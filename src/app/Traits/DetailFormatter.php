@@ -6,13 +6,11 @@ use Carbon\Carbon;
 
 trait DetailFormatter
 {
-    //時刻をフォーマット化
     public function formatTime($time): ?string
     {
         return $time ? Carbon::parse($time)->format('H:i') : null;
     }
 
-    //出勤時間・退勤時間
     public function formattedClockInOut($clockIn, $clockOut): array
     {
         return[
@@ -21,9 +19,7 @@ trait DetailFormatter
         ];
     }
 
-    //休憩時間
     public function FormattedBreakTime($attendanceRequestBreaks, $breakRecords): array{
-        //attendanceRequestBreaksに値がある時
         if($attendanceRequestBreaks && $attendanceRequestBreaks->isNotEmpty()){
             return $attendanceRequestBreaks->map(function ($break){
                 return [
@@ -32,7 +28,6 @@ trait DetailFormatter
                 ];
             })->toArray();
         }     
-        //値がない時
         return $breakRecords->map(function ($break) {
             return [
                 'break_start' => $this->formatTime($break->break_start),

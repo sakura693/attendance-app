@@ -1,4 +1,3 @@
-/*カレンダー部分*/
 .calendar{
     background: white;
     height: 40px;
@@ -48,14 +47,13 @@
     font-size: 18px;
 }
 
-/*テーブル*/
 .table {
     background: white;
     width: 100%;
     border-radius: 10px;
     margin-top: 30px;
     border-collapse: collapse;
-    table-layout: fixed; /*列幅の固定*/
+    table-layout: fixed; 
 }
 
 .table__label, 
@@ -64,7 +62,7 @@
     color: rgb(147, 135, 135);
     padding: 10px 80px 8px 0;
     text-align: center;
-    white-space: nowrap; /*テキストを折り返さない*/
+    white-space: nowrap; 
 }
 
 .table__label:first-of-type,

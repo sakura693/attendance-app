@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException; // 追加
+use Illuminate\Validation\ValidationException; 
 
 class CorrectionRequest extends FormRequest
 {

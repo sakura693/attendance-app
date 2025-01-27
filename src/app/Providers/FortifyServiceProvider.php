@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
-use App\Http\Responses\LoginResponse; //追加　
-use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract; //追加　
-use Illuminate\Support\Facades\Validator; // Validator ファサード
-use Illuminate\Support\Facades\Hash; // パスワードのハッシュチェック
-use App\Models\User; // User モデル
+use App\Http\Responses\LoginResponse; 
+use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract; 
+use Illuminate\Support\Facades\Validator; 
+use Illuminate\Support\Facades\Hash; 
+use App\Models\User; 
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -26,7 +26,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(LoginResponseContract::class, LoginResponse::class); //追加
+        $this->app->singleton(LoginResponseContract::class, LoginResponse::class); 
     }
 
     /**
@@ -34,7 +34,6 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //カスタムLoginResponseを登録
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
 
         Fortify::createUsersUsing(CreateNewUser::class);
@@ -43,7 +42,6 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.register');
         });
 
-        //一般ユーザーと管理者でログイン画面分ける
         Fortify::loginView(function(){
             if (request()->is('admin/*')){
                 return view('auth.admin-login');
@@ -51,11 +49,10 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.login');
         });
 
-        //管理者ログインのロジック
         Fortify::authenticateUsing(function (\Illuminate\Http\Request $request) {
             $user = \App\Models\User::where('email', $request->email)->where(function ($query) {
                 if (request()->is('admin/*')) {
-                $query->where('role', 'admin'); // 管理者のみ許可
+                $query->where('role', 'admin'); 
                 }
             })->first();
 

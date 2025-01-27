@@ -1,4 +1,3 @@
-/*テーブル*/
 .table {
     background: white;
     width: 100%;
@@ -9,7 +8,6 @@
 
 .table tr {
     display: grid;
-    /* 行をグリッドとして扱う */
     grid-template-columns: 1fr 2fr;
     align-items: center;
 }
@@ -34,7 +32,6 @@
     font-size: 15px;
     border: 1px solid rgb(199, 193, 193);
     border-radius: 3px;
-    /*margin-right: 70px;*/
 }
 
 .input__year{
@@ -47,7 +44,6 @@
 }
 
 .remarks-section{
-    /* サイズ変更を無効化 */
     resize: none;
     margin: -10px 0;
     font-size: 13px;
@@ -84,12 +80,10 @@
     margin-top: 10px;
 }
 
-/*承認ボタン*/
 .approval__btn {
     margin: 70px 0 30px;
 }
 
-/*承認済みのボタン*/
 .approved__btn{
     background: rgb(136, 136, 136);
     border: none;

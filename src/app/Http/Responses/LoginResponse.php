@@ -8,7 +8,6 @@ class LoginResponse implements LoginResponseContract
     public function toResponse($request){
         $user = $request->user();
 
-        //未認証の場合認証ページにリダイレクト
         if(!$user->hasVerifiedEmail()){
             return redirect('/email/verify');
         }
@@ -17,7 +16,6 @@ class LoginResponse implements LoginResponseContract
             return redirect('/admin/attendance/list');
         }
         
-        //一般ユーザーがログイン時のリダイレクト先
         return redirect('/attendance');
     }
 }
