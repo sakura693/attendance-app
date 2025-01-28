@@ -9,18 +9,20 @@ Dockerビルド <br>
 # Laravel開発環境
 1. docker-compose exec php bash
 2. composer install
-3. .envに以下の環境変数を追加 <br>
+3. 「.env.example」ファイルを 「.env」ファイルに名前を変更。または、新しく.envファイルを作成 
+4. .envに以下の環境変数を追加 
 ```
-    DB_CONNECTION=mysql <br>
-    DB_HOST=mysql <br>
-    DB_PORT=3306 <br>
-    DB_DATABASE=laravel_db <br>
-    DB_USERNAME=laravel_user <br>
-    DB_PASSWORD=laravel_pass <br>
+    DB_CONNECTION=mysql 
+    DB_HOST=mysql 
+    DB_PORT=3306 
+    DB_DATABASE=laravel_db 
+    DB_USERNAME=laravel_user 
+    DB_PASSWORD=laravel_pass 
 ```
-4. php artisan key:generate <br>
-5. php artisan migrate <br>
-6. php artisan db:seed
+5. php artisan key:generate 
+6. php artisan migrate 
+7. php artisan db:seed
+8. エラーが出る場合は sudo chmod -R 777 src/* を実行。
 
 # メール認証
 mailtrapというツールを使用しています。</br>
@@ -34,8 +36,8 @@ MAIL_FROM_ADDRESSは任意のメールアドレスを入力してください。
 # PHPUnitを利用したテストに関して
 以下のコマンド：
 ```
-php artisan key:generate --env=testing
 docker-compose exec php bash
+php artisan key:generate --env=testing
 php artisan migrate:fresh --env=testing
 vendor/bin/phpunit tests/Feature/テストファイル名
 ```
